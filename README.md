@@ -1,5 +1,5 @@
 # genderByNames
-Identyfy gender using names
+Identify gender using names
 ---------------------------------------------------
 Variant1 - returns gender - only first name counts
 ----------------------------------------------------

@@ -16,9 +16,7 @@ public class NameController {
 
         Name[] name = nameStringToArray(fullName);
 
-        String gender = name[0].gender();
-
-        return gender;
+        return name[0].gender();
     }
 
     @GetMapping("/genderVariant2")
@@ -26,9 +24,7 @@ public class NameController {
 
         Name[] name = nameStringToArray(fullName);
 
-        String gender = dominantGender(name);
-
-                    return gender;
+                    return dominantGender(name);
         }
 
     public Name[] nameStringToArray(String fullName){
@@ -44,16 +40,15 @@ public class NameController {
     }
     public String dominantGender(Name[] name) throws IOException {
 
-        String gender = "";
         int male = 0;
         int female = 0;
 
-        for(int i = 0; i < name.length;i++){
+        for (Name value : name) {
 
-            if(name[i].isMale())
+            if (value.isMale())
                 male++;
 
-            else if(name[i].isFemale())
+            else if (value.isFemale())
                 female++;
         }
 

@@ -4,6 +4,9 @@ plugins {
     id 'java'
 }
 
+
+
+
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -19,4 +22,11 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Main-class': 'com.example.genderByNames.GenderByNamesApplication'
+    }
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }

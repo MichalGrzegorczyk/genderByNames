@@ -1,15 +1,14 @@
 package com.example.genderByNames;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class Name {
 
 
     private final String name;
-    final String pathToMaleNames = "./src/main/resources/static/namesMale.csv";
-    final String pathToFemaleNames = "./src/main/resources/static/namesFemale.csv";
+    final String maleNamesFileName = "static/namesMale.csv";
+    final String femaleNamesFileName = "static/namesFemale.csv";
 
     public Name(String name) {
 
@@ -23,32 +22,49 @@ public class Name {
         return name;
     }
 
-    public boolean isMale() throws IOException {
-        BufferedReader maleNamesReader = new BufferedReader(new FileReader(pathToMaleNames));
+    private InputStream getFileFromResourceAsStream(String fileName){
+        ClassLoader classLoader = getClass().getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream(fileName);
 
-        String line;
-        do {
-            if ((line = maleNamesReader.readLine()) == null) {
-                return false;
-            }
-        } while (!line.equals(this.name));
+        if(inputStream == null){
+            throw new IllegalArgumentException("file "+ fileName + " not found!");
+        }
+        else{
+            return inputStream;
+        }
+    }
+
+    private boolean nameFoundInFile(InputStream is){
+
+        try(InputStreamReader streamReader = new InputStreamReader(is, StandardCharsets.UTF_8);
+        BufferedReader reader = new BufferedReader(streamReader)){
+
+            String line;
+            do{
+                if((line = reader.readLine()) == null){
+                    return false;
+                }
+            } while (!line.equals(this.name));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return true;
     }
 
-    public boolean isFemale() throws IOException {
-        BufferedReader femaleNamesReader = new BufferedReader(new FileReader(pathToFemaleNames));
+    public boolean isMale() {
 
-        String line;
-        do {
+        InputStream maleFileStream = getFileFromResourceAsStream(maleNamesFileName);
 
-            if ((line = femaleNamesReader.readLine()) == null) {
-                return false;
-            }
+        return nameFoundInFile(maleFileStream);
+    }
 
-        } while (!line.equals(this.name));
+    public boolean isFemale() {
 
-        return true;
+        InputStream femaleFileStream = getFileFromResourceAsStream(femaleNamesFileName);
+
+        return nameFoundInFile(femaleFileStream);
     }
     public String gender() throws IOException {
 

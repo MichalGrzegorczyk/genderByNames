@@ -20,7 +20,7 @@ public class NameController {
     }
 
     @GetMapping("/genderVariant2")
-    public String genderVariant2(@RequestParam(value = "name", defaultValue = "Andrzej") String fullName) throws IOException {
+    public String genderVariant2(@RequestParam(value = "name", defaultValue = "Andrzej") String fullName) {
 
         Name[] name = nameStringToArray(fullName);
 
@@ -38,7 +38,7 @@ public class NameController {
         }
         return name;
     }
-    public String dominantGender(Name[] name) throws IOException {
+    public String dominantGender(Name[] name) {
 
         int male = 0;
         int female = 0;

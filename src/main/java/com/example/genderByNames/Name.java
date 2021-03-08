@@ -12,8 +12,8 @@ public class Name {
 
     public Name(String name) {
 
-        name = name.toLowerCase();
-        this.name  = name.substring(0, 1).toUpperCase() + name.substring(1);
+        String temp = name.toLowerCase();
+        this.name  = temp.substring(0, 1).toUpperCase() + temp.substring(1);
 
     }
 
